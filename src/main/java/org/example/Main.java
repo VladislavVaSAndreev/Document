@@ -4,16 +4,57 @@ package org.example;
 // then press Enter. You can now see whitespace characters in your code.
 public class Main {
     public static void main(String[] args) {
-        // Press Alt+Enter with your caret at the highlighted text to see how
-        // IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+       ReportService reportService = new ReportService(Map.of(
+                DocumentType.pdf, 757,
+                DocumentType.json, 343,
+                DocumentType.xml, 152,
+                DocumentType.doc, 514,
+                DocumentType.xls, 151));
 
-        // Press Shift+F10 or click the green arrow button in the gutter to run the code.
-        for (int i = 1; i <= 5; i++) {
+    }
 
-            // Press Shift+F9 to start debugging your code. We have set one breakpoint
-            // for you, but you can always add more by pressing Ctrl+F8.
-            System.out.println("i = " + i);
+
+    static class ReportService {
+        public Map<DocumentType, Integer> reportServiceMap;
+
+        public ReportService(Map<DocumentType, Integer> reportServiceMap) {
+            this.reportServiceMap = reportServiceMap;
+        }
+
+
+        public double getReportService(Document document) {
+            double coefficient = reportServiceMap.get(document.getType());
+            double iddoc = document.getIdDoc();
+            return iddoc;
         }
     }
+
+    public static class Document {
+        private int iddoc;
+        private DocumentType type;
+
+        public Document(int iddoc, DocumentType type) {
+            this.iddoc = iddoc;
+            this.type = type;
+        }
+
+        public double getIdDoc() {
+            return iddoc;
+        }
+
+        public DocumentType getType() {
+            return type;
+        }
+    }
+
+    public enum DocumentType {
+        pdf,
+        json,
+        xml,
+        doc,
+        xls;
+
+    }
 }
+// 1) Для добавления нового типа документа, необходимо его прописать в 2-х полях.
+// 2) Если будет более 1000 типов отчетов будет расширяться 2 поля.
